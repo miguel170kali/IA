@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Misión, Visión y Objetivos - ColombiaCreaIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gif-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .superior-izquierda {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .superior-izquierda img {
+            height: 70px;
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 40px;
+            z-index: 10;
+            align-items: center;
+            height: 60px; /* Aseguramos que el menú tenga la misma altura que el header */
+            position: absolute; /* Posicionamos el menú de forma absoluta */
+            top: 10px; /* Ajustamos la posición vertical */
+            right: 30px; /* Ajustamos la posición horizontal */
+        }
+
+        .menu-navegacion a,
+        .dropbtn {
+            font-size: 20px;
+            font-weight: 600;
+            color: #33d4ff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .dropbtn::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #33d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .menu-navegacion a:hover::after,
+        .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .menu-navegacion a:hover,
+        .dropbtn:hover {
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 0;
+            margin: 0;
+            min-width: 180px;
+            z-index: 15;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #1e3c6b;
+            color: #33d4ff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Contenido principal - Ajustes para optimizar espacio */
+        .container-mvo {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 5%;
+            flex-grow: 1; /* Ocupa todo el espacio disponible */
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .columna-izquierda,
+        .columna-derecha {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribuye el espacio uniformemente */
+        }
+
+        .seccion {
+            margin-bottom: 30px;
+            background-color: rgba(11, 28, 62, 0.7);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex-grow: 1; /* Permite que las secciones crezcan para llenar el espacio */
+            margin: 15px 0; /* Margen uniforme */
+        }
+
+        .seccion h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .seccion p,
+        .seccion ul {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: justify;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .seccion ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        .seccion ul li {
+            margin-bottom: 12px;
+        }
+
+        /* Eliminamos los posicionamientos relativos que causaban desajustes */
+        .seccion#mision,
+        .seccion#vision,
+        .seccion#objetivos {
+            position: static;
+            top: auto;
+            left: auto;
+        }
+
+        /* Responsive design para pantallas más pequeñas */
+        @media (max-width: 992px) {
+            .container-mvo {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .columna-izquierda,
+            .columna-derecha {
+                width: 100%;
+                padding: 0;
+            }
+
+            .menu-navegacion {
+                gap: 20px;
+            }
+
+            .menu-navegacion a,
+            .dropbtn {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="{% static 'video/fondo.gif' %}" alt="Fondo animado de inteligencia artificial" class="gif-fondo" />
+    <div class="overlay"></div>
+
+    <div class="header">
+        <div class="superior-izquierda">
+            <a href="/">
+                <img src="{% static 'img/colombiacreaia.webp' %}" alt="ColombiaCreaIA">
+            </a>
+        </div>
+
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'resena' %}">Reseña</a></li>
+                    <li><a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a></li>
+                </ul>
+            </div>
+            <a href="{% url 'valores' %}">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a></li>
+                    <li><a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">CONTACTANOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'formulario_contacto' %}">Formulario de Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-mvo">
+        <div class="columna-izquierda">
+            <div class="seccion" id="mision">
+                <h1>Misión</h1>
+                <p>En ColombiaCreaIA, nos dedicamos a transformar el panorama digital de Colombia y Latinoamérica. Nuestra misión es empoderar a individuos y comunidades, brindándoles las herramientas y el conocimiento en Inteligencia Artificial para liderar la innovación. A través de una educación de vanguardia, fomentamos el pensamiento crítico y la creatividad. Formamos generaciones de líderes capaces de abordar los desafíos del futuro con soluciones tecnológicas avanzadas.</p>
+            </div>
+            <div class="seccion" id="vision">
+                <h1>Visión</h1>
+                <p>Nuestra misión es democratizar el acceso a la Inteligencia Artificial en Colombia y Latinoamérica, impulsando el desarrollo social y económico. Nos comprometemos a proporcionar una formación integral y ética, cultivando habilidades técnicas y una visión estratégica en nuestros estudiantes. Buscamos crear un impacto positivo en la sociedad, formando profesionales capaces de aplicar la IA para el bienestar humano y el progreso sostenible.</p>
+            </div>
+        </div>
+
+        <div class="columna-derecha">
+            <div class="seccion" id="objetivos">
+                <h1>Objetivos Generales</h1>
+                <ul>
+                    <li>Democratizar el acceso al conocimiento de IA en Colombia y Latinoamérica, ofreciendo programas educativos inclusivos para todas las edades y niveles de experiencia.</li>
+                    <li>Posicionarse como líder en formación y consultoría de IA para 2030, mediante metodologías innovadoras y alianzas estratégicas con instituciones educativas y empresas.</li>
+                    <li>Fomentar la apropiación crítica de la IA en sectores clave (educación, emprendimiento, PYMES), mediante cursos prácticos, talleres y asesorías especializadas.</li>
+                    <li>Impulsar la transformación digital en comunidades vulnerables y zonas rurales, llevando programas de alfabetización tecnológica y proyectos sociales con impacto tangible.</li>
+                    <li>Generar ecosistemas de innovación a través de eventos (hackatones, seminarios) que promuevan la creatividad y aplicación de IA en soluciones reales.</li>
+                    <li>Desarrollar herramientas y contenidos accesibles que simplifiquen el aprendizaje de IA, incluso para personas sin formación técnica previa.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

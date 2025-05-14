@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error al Enviar Mensaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Estilos globales */
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 1.25rem; /* Usar rem */
+            border-radius: 0.625rem; /* Usar rem */
+            box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* Usar rem */
+            width: 90%; /* Adaptar ancho */
+            max-width: 600px; /* Ancho máximo */
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: red;
+            font-size: 2rem; /* Usar rem */
+            margin-bottom: 1rem; /* Usar rem */
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1rem; /* Usar rem */
+            margin-bottom: 1.25rem; /* Usar rem */
+            line-height: 1.6;
+        }
+
+        a {
+            color: #00FFFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilos del menú (MANTENIDOS SIN CAMBIOS) */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%; /* Usar rem */
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .superior-izquierda {
+            display: flex;
+            align-items: center;
+        }
+
+        .superior-izquierda img {
+            height: 4.375rem; /* Usar rem */
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 2.5rem; /* Usar rem */
+        }
+
+        .menu-navegacion a,
+        .menu-navegacion .dropbtn {
+            font-size: 1.25rem; /* Usar rem */
+            font-weight: 600;
+            color: #33d4ff;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .menu-navegacion .dropbtn::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0.125rem; /* Usar rem */
+            background-color: #fff;
+            bottom: -0.3125rem; /* Usar rem */
+            left: 0;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .menu-navegacion a:hover::after,
+        .menu-navegacion .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); /* Usar rem */
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 0.75rem 1rem; /* Usar rem */
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1e3c6b;
+        }
+
+        /* Media Query para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem; /* Ajustar padding */
+            }
+
+            h1 {
+                font-size: 1.75rem; /* Ajustar tamaño de fuente */
+            }
+
+            p {
+                font-size: 1rem; /* Ajustar tamaño de fuente */
+            }
+
+            .menu-navegacion {
+                gap: 1.25rem; /* Ajustar gap del menú */
+            }
+
+            .menu-navegacion a,
+            .menu-navegacion .dropbtn {
+                font-size: 1rem; /* Ajustar tamaño de fuente del menú */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .superior-izquierda {
+                position: static;
+                margin-bottom: 0.5rem; /* Usar rem */
+            }
+
+            .menu-navegacion {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem; /* Ajustar gap del menú */
+                margin-top: 0.5rem; /* Usar rem */
+            }
+
+            .superior-izquierda img {
+                height: 3rem; /* Ajustar altura del logo */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="superior-izquierda">
+            <a href="/"><img src="{% static 'img/colombiacreaia.webp' %}" alt="Logo ColombiaCreaIA" loading="lazy"></a>
+        </div>
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'resena' %}">Reseña</a>
+                    <a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a>
+                </div>
+            </div>
+            <a href="{% url 'valores' %}">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a>
+                    <a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>¡Oops! Ha ocurrido un error</h1>
+        <p>Lo sentimos, ha habido un problema al enviar tu mensaje. Por favor, inténtalo de nuevo más tarde o contáctanos
+            directamente.</p>
+        <a href="{% url 'formulario_contacto' %}">Volver al formulario de contacto</a>
+    </div>
+</body>
+
+</html>

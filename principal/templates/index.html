@@ -1,0 +1,387 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColombiaCreaIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos base */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gif-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .superior-izquierda {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .superior-izquierda img {
+            height: 70px;
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 40px;
+            z-index: 10;
+            align-items: center;
+            height: 60px; /* Aseguramos que el menú tenga la misma altura que el header */
+            position: absolute; /* Posicionamos el menú de forma absoluta */
+            top: 10px; /* Ajustamos la posición vertical */
+            right: 30px; /* Ajustamos la posición horizontal */
+        }
+
+        .menu-navegacion a,
+        .dropbtn {
+            font-size: 20px;
+            font-weight: 600;
+            color: #33d4ff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .dropbtn::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #33d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .menu-navegacion a:hover::after,
+        .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .menu-navegacion a:hover,
+        .dropbtn:hover {
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 5px 0; /* Añadimos un pequeño padding vertical al contenedor */
+            margin: 0;
+            min-width: 180px;
+            z-index: 15;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #1e3c6b;
+            color: #33d4ff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Contenido principal - Ajustes para optimizar espacio */
+        .container-mvo {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 5%;
+            flex-grow: 1; /* Ocupa todo el espacio disponible */
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .columna-izquierda,
+        .columna-derecha {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribuye el espacio uniformemente */
+        }
+
+        .seccion {
+            margin-bottom: 30px;
+            background-color: rgba(11, 28, 62, 0.7);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex-grow: 1; /* Permite que las secciones crezcan para llenar el espacio */
+            margin: 15px 0; /* Margen uniforme */
+        }
+
+        .seccion h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .seccion p,
+        .seccion ul {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: justify;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .seccion ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        .seccion ul li {
+            margin-bottom: 12px;
+        }
+
+        /* Eliminamos los posicionamientos relativos que causaban desajustes */
+        .seccion#mision,
+        .seccion#vision,
+        .seccion#objetivos {
+            position: static;
+            top: auto;
+            left: auto;
+        }
+
+        /* Responsive design para pantallas más pequeñas */
+        @media (max-width: 992px) {
+            .container-mvo {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .columna-izquierda,
+            .columna-derecha {
+                width: 100%;
+                padding: 0;
+            }
+
+            .menu-navegacion {
+                gap: 20px;
+                position: static; /* El menú ocupa el flujo normal */
+                flex-direction: column; /* Alinear verticalmente en pantallas pequeñas */
+                align-items: flex-start; /* Alinear a la izquierda */
+                background-color: rgba(0, 0, 0, 0.8); /* Fondo para mejor legibilidad */
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+            }
+
+            .menu-navegacion a,
+            .dropbtn {
+                font-size: 16px;
+                padding: 8px 15px;
+                display: block; /* Cada enlace ocupa una línea */
+            }
+
+            .dropdown {
+                width: 100%;
+            }
+
+            .dropdown-content {
+                position: static; /* El contenido del dropdown ocupa el flujo normal */
+                box-shadow: none;
+                border-radius: 0;
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        /* Estilos específicos para la sección hero */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ocupa toda la altura de la pantalla */
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .textos {
+            padding: 20px;
+        }
+
+        .hero .titulo-principal {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #33d4ff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilos para el logo inferior */
+        .logo-cic {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .logo-cic img {
+            height: 60px; /* Ajustamos la altura del logo inferior */
+        }
+    </style>
+</head>
+<body>
+
+    <video id="videoFondo" autoplay muted playsinline class="gif-fondo">
+        <source src="{% static 'video/fondo.mp4' %}" type="video/mp4">
+        <source src="{% static 'video/fondo.webm' %}" type="video/webm">
+        Tu navegador no soporta el vídeo HTML5.
+    </video>
+    <div class="overlay"></div>
+
+    <header class="header">
+        <div class="superior-izquierda">
+            <a href="/"><img src="{% static 'img/colombiacreaia.webp' %}" alt="Logo ColombiaCreaIA"></a>
+        </div>
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'resena' %}">Reseña</a></li>
+                    <li><a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a></li>
+                </ul>
+            </div>
+            <a href="{% url 'valores' %}">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a></li>
+                    <li><a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">CONTACTANOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'formulario_contacto' %}">Formulario de Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <footer class="logo-cic">
+        <img src="{% static 'img/CIC_LOGO.webp' %}" alt="Logo Corporación Informática Colombiana">
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('videoFondo');
+    const loopStart = 5;
+    const loopEnd = 11;
+    let reversing = false;
+
+    function smoothRewind() {
+        const rewindStep = 0.05;
+        const rewindInterval = setInterval(() => {
+            if (video.currentTime <= loopStart) {
+                clearInterval(rewindInterval);
+                reversing = false;
+                video.play();
+                video.currentTime = loopStart;
+                return;
+            }
+            video.currentTime -= rewindStep;
+        }, 40); // velocidad del rebobinado
+    }
+
+    video.addEventListener('loadedmetadata', () => {
+        video.currentTime = loopStart;
+        video.play();
+    });
+
+    video.addEventListener('timeupdate', () => {
+        if (!reversing && video.currentTime >= loopEnd) {
+            reversing = true;
+            video.pause();
+            smoothRewind();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

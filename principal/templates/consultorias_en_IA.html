@@ -1,0 +1,446 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultorías Especializadas en Inteligencia Artificial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Estilos base */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Asegura que el body ocupe al menos toda la altura de la ventana */
+        }
+
+        /* Imagen de fondo */
+        .imagen-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            /* Usar unidades relativas */
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .superior-izquierda {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            /* Usar unidades relativas */
+            z-index: 10;
+            position: absolute;
+            /* Permite posicionamiento más flexible */
+            top: 1.25rem;
+            /* Usar unidades relativas */
+            left: 1.25rem;
+            /* Usar unidades relativas */
+        }
+
+        .superior-izquierda img {
+            height: 4.375rem;
+            /* Usar unidades relativas */
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 2.5rem;
+            /* Usar unidades relativas */
+            z-index: 10;
+            align-items: center;
+            height: 3.75rem;
+            /* Usar unidades relativas */
+            position: absolute;
+            top: 0.625rem;
+            /* Usar unidades relativas */
+            right: 1.875rem;
+            /* Usar unidades relativas */
+        }
+
+        .menu-navegacion a,
+        .dropbtn {
+            font-size: 1.25rem;
+            /* Usar unidades relativas */
+            font-weight: 600;
+            color: #33d4ff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .dropbtn::after {
+            content: "";
+            position: absolute;
+            bottom: 0.3125rem;
+            /* Usar unidades relativas */
+            left: 0;
+            width: 0%;
+            height: 0.125rem;
+            /* Usar unidades relativas */
+            background-color: #33d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .menu-navegacion a:hover::after,
+        .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .menu-navegacion a:hover,
+        .dropbtn:hover {
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.4);
+            /* Usar unidades relativas */
+            border-radius: 0.5rem;
+            /* Usar unidades relativas */
+            padding: 0.3125rem 0;
+            /* Usar unidades relativas */
+            margin: 0;
+            min-width: 11.25rem;
+            /* Usar unidades relativas */
+            z-index: 15;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 0.625rem 1.25rem;
+            /* Usar unidades relativas */
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            /* Usar unidades relativas */
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #1e3c6b;
+            color: #33d4ff;
+        }
+
+        /* Contenido principal */
+        .container-mvo {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.25rem 5%;
+            /* Usar unidades relativas */
+            flex-grow: 1;
+            margin-top: 1.25rem;
+            /* Usar unidades relativas */
+            margin-bottom: 2.5rem;
+            /* Usar unidades relativas */
+        }
+
+        .columna-izquierda,
+        .columna-derecha {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .seccion {
+            margin-bottom: 1.875rem;
+            /* Usar unidades relativas */
+            background-color: rgba(11, 28, 62, 0.7);
+            padding: 1.5625rem;
+            /* Usar unidades relativas */
+            border-radius: 0.625rem;
+            /* Usar unidades relativas */
+            box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.3);
+            /* Usar unidades relativas */
+            flex-grow: 1;
+            margin: 0.9375rem 0;
+            /* Usar unidades relativas */
+        }
+
+        .seccion h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            text-align: center;
+            margin-bottom: 1.25rem;
+            /* Usar unidades relativas */
+            font-size: 1.5rem;
+            /* Usar unidades relativas */
+        }
+
+        .seccion p,
+        .seccion ul {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: justify;
+            font-size: 1rem;
+            /* Usar unidades relativas */
+            margin-bottom: 0.9375rem;
+            /* Usar unidades relativas */
+        }
+
+        .seccion ul {
+            list-style-type: disc;
+            margin-left: 1.25rem;
+            /* Usar unidades relativas */
+            padding-left: 1.25rem;
+            /* Usar unidades relativas */
+        }
+
+        .seccion ul li {
+            margin-bottom: 0.75rem;
+            /* Usar unidades relativas */
+        }
+
+        .seccion#mision,
+        .seccion#vision,
+        .seccion#objetivos {
+            position: static;
+            top: auto;
+            left: auto;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .container-mvo {
+                flex-direction: column;
+                padding: 1.25rem;
+                /* Usar unidades relativas */
+            }
+
+            .columna-izquierda,
+            .columna-derecha {
+                width: 100%;
+                padding: 0;
+            }
+
+            .menu-navegacion {
+                gap: 1.25rem;
+                /* Usar unidades relativas */
+                position: static;
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: rgba(0, 0, 0, 0.8);
+                padding: 0.625rem;
+                /* Usar unidades relativas */
+                margin-top: 0.625rem;
+                /* Usar unidades relativas */
+                border-radius: 0.3125rem;
+                /* Usar unidades relativas */
+                right: auto;
+                /* Asegura que ocupe el ancho completo */
+                top: auto;
+                /* Asegura que ocupe el flujo normal */
+            }
+
+            .menu-navegacion a,
+            .dropbtn {
+                font-size: 1rem;
+                /* Usar unidades relativas */
+                padding: 0.5rem 0.9375rem;
+                /* Usar unidades relativas */
+                display: block;
+            }
+
+            .dropdown {
+                width: 100%;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border-radius: 0;
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        /* Estilos específicos para la sección hero (si se usa en esta página) */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .textos {
+            padding: 1.25rem;
+            /* Usar unidades relativas */
+        }
+
+        .hero .titulo-principal {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.1875rem;
+            /* Usar unidades relativas */
+            margin-bottom: 1.25rem;
+            /* Usar unidades relativas */
+            color: #33d4ff;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+            /* Usar unidades relativas */
+        }
+
+        /* Estilos para el logo inferior (si se usa en esta página) */
+        .logo-cic {
+            position: absolute;
+            bottom: 1.25rem;
+            /* Usar unidades relativas */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .logo-cic img {
+            height: 3.75rem;
+            /* Usar unidades relativas */
+        }
+    </style>
+</head>
+
+<body>
+
+    <img src="{% static 'img/fondo_consultorias.webp' %}" alt="Fondo" class="imagen-fondo">
+    <div class="overlay"></div>
+
+    <header class="header">
+        <div class="superior-izquierda">
+            <a href="/"><img src="{% static 'img/colombiacreaia.webp' %}" alt="Logo ColombiaCreaIA"></a>
+        </div>
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <ul class="dropdown-content">
+                    <li><a href="/resena/">Reseña</a></li>
+                    <li><a href="/mision-vision-objetivos/">Misión, Visión y Objetivos</a></li>
+                </ul>
+            </div>
+            <a href="/valores/">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="/cursos/">Cursos Cortos de IA</a></li>
+                    <li><a href="/consultorias/">Consultorías en IA</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">CONTACTANOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="/formulario/">Formulario de Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-mvo">
+        <div class="columna-izquierda">
+            <div class="seccion" id="que-es-ia">
+                <h1>¿Qué es la Inteligencia Artificial?</h1>
+                <p>
+                    La Inteligencia Artificial (IA) es una rama de la ciencia de la computación dedicada al desarrollo de
+                    sistemas capaces de realizar tareas que requieren inteligencia humana. Esto incluye el aprendizaje, el
+                    razonamiento, la resolución de problemas, la percepción, el lenguaje natural y la planificación. La IA
+                    busca crear máquinas que puedan simular, extender y mejorar las capacidades de la mente humana.
+                </p>
+            </div>
+            <div class="seccion" id="tipos-ia">
+                <h1>Tipos de Inteligencia Artificial</h1>
+                <p>
+                    La IA se puede clasificar en varios tipos según su capacidad y funcionalidad:
+                </p>
+                <ul>
+                    <li><b>IA Débil (o Estrecha):</b> Diseñada para realizar una tarea específica. La mayoría de los sistemas
+                        de IA actuales, como los asistentes virtuales y los sistemas de recomendación, pertenecen a esta
+                        categoría.</li>
+                    <li><b>IA Fuerte (o General):</b> Tiene la capacidad de entender, aprender, implementar y aplicar el
+                        conocimiento en una amplia variedad de tareas, similar a la inteligencia humana.</li>
+                    <li><b>Superinteligencia:</b> Un nivel de inteligencia que supera la de los seres humanos en todos los
+                        aspectos, incluyendo la creatividad, la sabiduría y la resolución de problemas.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="columna-derecha">
+            <div class="seccion" id="aplicaciones-ia">
+                <h1>Aplicaciones de la Inteligencia Artificial</h1>
+                <p>
+                    La IA tiene numerosas aplicaciones en diversos campos:
+                </p>
+                <ul>
+                    <li><b>Salud:</b> Diagnóstico de enfermedades, desarrollo de tratamientos personalizados, investigación
+                        farmacéutica.</li>
+                    <li><b>Finanzas:</b> Detección de fraudes, análisis de riesgos, asesoramiento financiero automatizado.</li>
+                    <li><b>Transporte:</b> Vehículos autónomos, optimización de rutas, gestión del tráfico.</li>
+                    <li><b>Manufactura:</b> Automatización de procesos, control de calidad, mantenimiento predictivo.</li>
+                    <li><b>Educación:</b> Personalización del aprendizaje, tutorías inteligentes, evaluación automatizada.</li>
+                </ul>
+            </div>
+            <div class="seccion" id="futuro-ia">
+                <h1>El Futuro de la Inteligencia Artificial</h1>
+                <p>
+                    El futuro de la IA promete transformaciones aún más profundas en la sociedad y la industria. Se espera
+                    que la IA continúe avanzando en áreas como el aprendizaje profundo, el procesamiento del lenguaje natural
+                    y la robótica, lo que permitirá desarrollar sistemas más autónomos y capaces de interactuar de manera más
+                    natural con los humanos. Sin embargo, también plantea importantes desafíos éticos y sociales que deben
+                    abordarse, como la privacidad, la seguridad y el impacto en el empleo.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

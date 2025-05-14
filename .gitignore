@@ -1,0 +1,118 @@
+# Carpetas de entorno virtual de Python
+venv/
+.venv/
+env/
+myenv/
+env-django/  # Otro nombre común
+.env        # Archivo .env para variables de entorno (¡MUY IMPORTANTE!)
+
+# Archivos de código de bytes de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos de sistema operativo
+.DS_Store      # macOS
+Thumbs.db     # Windows
+*.swp        # Archivos swap de Vim
+*.swo        # Archivos swap de Vim
+._* # Archivos temporales de macOS
+.Spotlight-V100 # Metadata de Spotlight en macOS
+.Trashes       # Papelera de reciclaje en macOS
+ehthumbs.db   # Archivos de caché de Eset Smart Security
+Desktop.ini    # Archivos de configuración de Windows Desktop
+[Tt]humbs*.db   # Archivos de caché de miniaturas de Windows
+
+# Dependencias de Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de registro y temporales
+*.log
+*.tmp
+temp/
+tmp/
+tmp.*
+*.bak
+*.dump
+*.sql
+*.DSStore # Otra vez para ser redundante
+
+# Archivos de bases de datos (¡PELIGRO: NO SUBIR DATOS SENSIBLES!)
+*.sqlite3
+*.sqlite
+*.db
+*.mdf
+*.ldf
+
+# Archivos de configuración sensibles (¡NUNCA SUBIR!)
+# config.py  # Si tienes un archivo de configuración separado
+# settings.py # Si tienes un archivo de settings local
+.env* # Archivos .env (pueden contener claves, etc.)
+*.ini       # Archivos de configuración INI
+*.json.secret # Archivos JSON con secretos
+*.yaml.secret # Archivos YAML con secretos
+*.xml.secret  # Archivos XML con secretos
+
+# Archivos de medios subidos por el usuario (si no quieres versionarlos)
+media/
+uploads/
+
+# Archivos generados por Django (si usas Django)
+*.py[cod]  # Archivos de código de bytes de Django
+*.sqlite3  # Bases de datos SQLite (¡CUIDADO!)
+db.sqlite3
+local_settings.py
+local_settings.ini
+instance/
+migrations/  # Si no quieres trackear los cambios en la DB
+static/admin  # Si no has personalizado el admin de Django
+staticfiles/ # Recolectados estáticos (si usas collectstatic)
+
+# Archivos IDE / Editor
+.idea/       # IntelliJ IDEA
+.project
+.workspace
+.history
+*.iml       # IntelliJ IDEA Module
+.Rhistory    # Archivos de historial de RStudio
+.pydevproject
+.spyderproject
+.ropeproject
+.flowconfig
+.tern-project
+.c9/
+.cache
+.sass-cache
+.eslintcache
+.stylelintcache
+.npmrc
+.yarnrc
+/dist/      # Carpeta de compilación (si la genera tu proyecto)
+/build/     # Carpeta de compilación
+/target/    # Carpeta de compilación (Maven)
+/out/       # Carpeta de compilación
+/bin/       # Carpeta de compilación
+.recommender # Carpeta de archivos temporales de Recommender
+
+# Archivos de VS Code (Tú decides si quieres compartirlos)
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Archivos de Docker (si usas Docker localmente)
+.dockerignore
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Personaliza esto según tu proyecto
+# Ejemplos:
+# my_secret_key.txt
+# backup/
+# *.swp
+# /logs/

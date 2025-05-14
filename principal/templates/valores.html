@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valores - ColombiaCreaIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+        <style>
+        body {
+            background-image: url('{% static "img/fondo_valores.webp" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.2);
+            background-blend-mode: overlay;
+        }
+        
+        .valores-container {
+            max-width: 960px;
+            margin: 120px auto 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            min-height: 800px; /* Aumentado para las nuevas posiciones */
+        }
+
+        .valor {
+            width: 500px;
+            height: 500px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .video-fondo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .valor img, .valor h2, .valor p {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* NUEVAS POSICIONES (3 ARRIBA, 2 ABAJO) */
+        .valor:nth-child(1) { /* Innovación - Arriba izquierda */
+            top: 100px;
+            left: 50px;
+        }
+
+        .valor:nth-child(2) { /* Accesibilidad - Arriba centro */
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .valor:nth-child(3) { /* Compromiso Social - Arriba derecha */
+            top: 50px;
+            right: 50px;
+        }
+
+        .valor:nth-child(4) { /* Calidad Educativa - Abajo izquierda */
+            bottom: 50px;
+            left: 25%;
+        }
+
+        .valor:nth-child(5) { /* Inclusión - Abajo derecha */
+            bottom: 50px;
+            right: 25%;
+        }
+
+        .valor img {
+            max-width: 70px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+
+        .valor h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1em;
+            color: #00FFFF;
+            margin-top: 8px;
+            margin-bottom: 5px;
+        }
+
+        .valor p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            color: #e0e0e0;
+        }
+
+        .titulo-valores {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            text-align: center;
+            margin-top: 80px;
+            margin-bottom: 70px;
+            font-size: 2.6em;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .superior-izquierda {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .superior-izquierda img {
+            height: 70px;
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 40px;
+            z-index: 10;
+            align-items: center;
+            height: 60px;
+            position: absolute;
+            top: 10px;
+            right: 30px;
+        }
+
+        .menu-navegacion a,
+        .dropbtn {
+            font-size: 20px;
+            font-weight: 600;
+            color: #33d4ff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .dropbtn::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #33d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .menu-navegacion a:hover::after,
+        .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .menu-navegacion a:hover,
+        .dropbtn:hover {
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 5px 0;
+            margin: 0;
+            min-width: 180px;
+            z-index: 15;
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #1e3c6b;
+            color: #33d4ff;
+        }
+
+        @media (max-width: 992px) {
+            .valores-container {
+                margin-top: 160px;
+            }
+
+            .menu-navegacion {
+                gap: 20px;
+            }
+
+            .menu-navegacion a,
+            .dropbtn {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="superior-izquierda">
+            <a href="/">
+                <img src="{% static 'img/colombiacreaia.webp' %}" alt="ColombiaCreaIA" style="height: 80px;">
+            </a>
+        </div>
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'resena' %}">Reseña</a></li>
+                    <li><a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a></li>
+                </ul>
+            </div>
+            <a href="{% url 'valores' %}">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a></li>
+                    <li><a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">CONTACTANOS</button>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'formulario_contacto' %}">Formulario de Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <h1 class="titulo-valores">VALORES</h1>
+
+    <div class="valores-container">
+        <div class="valor">
+            <video src="{% static 'video/FONDO_REDONDO.mp4' %}" autoplay loop muted class="video-fondo"></video>
+            <img src="{% static 'img/innovacion.webp' %}" alt="Innovación">
+            <h2>Innovación</h2>
+            <p>Nos anticipamos al futuro con creatividad y tecnología.</p>
+        </div>
+        <div class="valor">
+            <video src="{% static 'video/FONDO_REDONDO.mp4' %}" autoplay loop muted class="video-fondo"></video>
+            <img src="{% static 'img/accesibilidad.webp' %}" alt="Accesibilidad">
+            <h2>Accesibilidad</h2>
+            <p>La IA debe estar al alcance de todos.</p>
+        </div>
+        <div class="valor">
+            <video src="{% static 'video/FONDO_REDONDO.mp4' %}" autoplay loop muted class="video-fondo"></video>
+            <img src="{% static 'img/compromiso.webp' %}" alt="Compromiso Social">
+            <h2>Compromiso Social</h2>
+            <p>Creemos en la transformación de comunidades a través del conocimiento.</p>
+        </div>
+        <div class="valor">
+            <video src="{% static 'video/FONDO_REDONDO.mp4' %}" autoplay loop muted class="video-fondo"></video>
+            <img src="{% static 'img/calidad_educativa.webp' %}" alt="Calidad Educativa">
+            <h2>Calidad Educativa</h2>
+            <p>Enseñamos con pasión, claridad y excelencia.</p>
+        </div>
+        <div class="valor">
+            <video src="{% static 'video/FONDO_REDONDO.mp4' %}" autoplay loop muted class="video-fondo"></video>
+            <img src="{% static 'img/inclusion.webp' %}" alt="Inclusión">
+            <h2>Inclusión</h2>
+            <p>Educación para todas las edades y niveles.</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Cursos y Eventos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            box-sizing: border-box; /* Añadido para un mejor manejo del padding y border */
+        }
+
+        body {
+            background: url("{% static 'img/fondo_consultorias.webp' %}") no-repeat center center fixed;
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.4);
+            background-blend-mode: overlay;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+        }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.superior-izquierda {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.superior-izquierda img {
+    height: 70px;
+}
+
+.menu-navegacion {
+    display: flex;
+    gap: 2.5rem; /* Usar unidades relativas */
+    z-index: 10;
+    align-items: center;
+    height: 3.75rem; /* Usar unidades relativas */
+    position: absolute;
+    top: 0.625rem; /* Usar unidades relativas */
+    right: 100px
+}
+
+.menu-navegacion a,
+.dropbtn {
+    font-size: 20px;
+    font-weight: 600;
+    color: #33d4ff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+}
+
+.menu-navegacion a::after,
+.dropbtn::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #33d4ff;
+    transition: width 0.3s ease;
+}
+
+.menu-navegacion a:hover::after,
+.dropbtn:hover::after {
+    width: 100%;
+}
+
+.menu-navegacion a:hover,
+.dropbtn:hover {
+    color: #ffffff;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    background-color: #0b1c3e;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    border-radius: 8px;
+    padding: 5px 0;
+    min-width: 180px;
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content li a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.dropdown-content li a:hover {
+    background-color: #1e3c6b;
+    color: #33d4ff;
+}
+
+        /* Contenido Principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%; /* Adaptar ancho */
+            max-width: 75rem; /* Usar rem */
+            margin-top: 6.25rem; /* Usar rem */
+            margin-bottom: 3.125rem; /* Usar rem */
+            padding: 1.25rem; /* Usar rem */
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 0.625rem; /* Usar rem */
+            box-sizing: border-box;
+        }
+
+        .main-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            font-size: 2.5rem; /* Usar rem */
+            margin-bottom: 1.25rem; /* Usar rem */
+            text-align: center;
+        }
+
+        /* Estilos para la sección de cursos */
+        .cursos-container {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1.875rem; /* Usar rem */
+            flex-wrap: wrap; /* Permite que los cursos se envuelvan en pantallas pequeñas */
+        }
+
+        .curso-box {
+            flex: 0 1 calc(33% - 1.25rem); /* Ajustar para tres columnas con espacio */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.625rem; /* Usar rem */
+            padding: 1.25rem; /* Usar rem */
+            box-sizing: border-box;
+            margin: 0.625rem; /* Usar rem */
+            min-width: 15rem; /* Ancho mínimo para evitar colapso */
+        }
+
+        .curso-box h2 {
+            font-size: 1.25rem; /* Usar rem */
+            color: #00FFFF;
+            margin-bottom: 0.9375rem; /* Usar rem */
+            display: flex;
+            align-items: center;
+        }
+
+        .curso-box .numero {
+            background-color: #ffcc00;
+            color: #000;
+            border-radius: 50%;
+            padding: 0.375rem 0.75rem; /* Usar rem */
+            margin-right: 3rem; /* Usar rem */
+            font-size: 0.75rem; /* Usar rem */
+            font-weight: bold;
+        }
+
+        .curso-box ul {
+            list-style: none;
+            padding-left: 1.25rem; /* Usar rem */
+        }
+
+        .curso-box li {
+            margin-bottom: 0.625rem; /* Usar rem */
+            font-size: 1rem; /* Usar rem */
+            line-height: 1.6;
+        }
+
+        /* Footer (MANTENIDO SIN CAMBIOS) */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 1.25rem 0; /* Usar rem */
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto;
+        }
+
+        /* Nuevos estilos para Talleres y Charlas */
+        .talleres-charlas-titulo {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            font-size: 2rem; /* Usar rem */
+            text-align: center;
+            margin-bottom: 1.25rem; /* Usar rem */
+        }
+
+        .talleres-charlas {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: 1.25rem; /* Usar rem */
+        }
+
+        .taller-charla {
+            flex: 0 0 calc(50% - 0.625rem); /* Ajustar para dos columnas con espacio */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem; /* Usar rem */
+            padding: 0.9375rem; /* Usar rem */
+            box-sizing: border-box;
+            margin-bottom: 0.625rem; /* Usar rem */
+        }
+
+        .taller-charla h3 {
+            font-size: 1.125rem; /* Usar rem */
+            color: #00FFFF;
+            margin-bottom: 0.625rem; /* Usar rem */
+        }
+
+        .taller-charla p {
+            font-size: 1rem; /* Usar rem */
+            line-height: 1.6;
+        }
+
+        /* Media Queries para mejor adaptabilidad */
+        @media (max-width: 992px) {
+            .cursos-container {
+                flex-direction: column; /* Apilar los cursos en pantallas medianas */
+            }
+
+            .curso-box {
+                flex: 0 1 auto;
+                width: 95%; /* Ancho completo con margen */
+                margin: 0.625rem auto;
+            }
+
+            .talleres-charlas {
+                flex-direction: column; /* Apilar talleres y charlas en pantallas medianas */
+            }
+
+            .taller-charla {
+                flex: 0 1 auto;
+                width: 95%; /* Ancho completo con margen */
+                margin: 0.625rem auto;
+            }
+
+            .main-content h1 {
+                font-size: 2rem; /* Ajustar tamaño del título */
+            }
+
+            .talleres-charlas-titulo {
+                font-size: 1.75rem; /* Ajustar tamaño del título de talleres */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem; /* Ajustar padding del contenido */
+                margin-top: 5rem; /* Ajustar margen superior */
+            }
+
+            .curso-box h2 {
+                font-size: 1.125rem; /* Ajustar tamaño del subtítulo del curso */
+            }
+
+            .curso-box li {
+                font-size: 0.9rem; /* Ajustar tamaño de la lista del curso */
+            }
+
+            .taller-charla h3 {
+                font-size: 1rem; /* Ajustar tamaño del título del taller */
+            }
+
+            .taller-charla p {
+                font-size: 0.9rem; /* Ajustar tamaño del texto del taller */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .superior-izquierda {
+                position: static;
+                margin-bottom: 0.5rem; /* Usar rem */
+            }
+
+            .menu-navegacion {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem; /* Ajustar gap del menú */
+                margin-top: 3rem; /* Usar rem */
+            }
+
+            .superior-izquierda img {
+                height: 3rem; /* Ajustar altura del logo */
+            }
+
+            .main-content h1 {
+                font-size: 1.75rem; /* Ajustar tamaño del título */
+            }
+
+            .talleres-charlas-titulo {
+                font-size: 1.5rem; /* Ajustar tamaño del título de talleres */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="superior-izquierda">
+        <a href="/"><img src="{% static 'img/colombiacreaia.webp' %}" alt="Logo ColombiaCreaIA"></a>
+    </div>
+    <nav class="menu-navegacion">
+        <div class="dropdown">
+            <button class="dropbtn">INSTITUCIONAL</button>
+            <ul class="dropdown-content">
+                <li><a href="{% url 'resena' %}">Reseña</a></li>
+                <li><a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a></li>
+            </ul>
+        </div>
+        <a href="{% url 'valores' %}">VALORES</a>
+        <div class="dropdown">
+            <button class="dropbtn">SERVICIOS</button>
+            <ul class="dropdown-content">
+                <li><a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a></li>
+                <li><a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">CONTACTANOS</button>
+            <ul class="dropdown-content">
+                <li><a href="{% url 'formulario_contacto' %}">Formulario de Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <main class="main-content">
+        <h1>Cursos Cortos en IA</h1>
+
+        <div class="cursos-container">
+            <div class="curso-box">
+                <h2><span class="numero">01</span> Para Niños (8 a 12 años)</h2>
+                <ul>
+                    <li>Descubriendo la Inteligencia Artificial: Curso lúdico de introducción a conceptos de IA mediante juegos y actividades creativas.</li>
+                    <li>Programación con IA para niños: Primeros pasos en programación con bloques (Scratch + IA).</li>
+                </ul>
+            </div>
+
+            <div class="curso-box">
+                <h2><span class="numero">02</span> Para Jóvenes (13 a 20 años)</h2>
+                <ul>
+                    <li>Introducción a la IA y el Machine Learning: Conceptos básicos explicados de manera práctica.</li>
+                    <li>Aplicaciones de IA en la vida diaria: Cómo usar la IA en estudios, redes sociales y proyectos personales.</li>
+                    <li>Creación de Chatbots y asistentes personales: Curso práctico para crear sus propios bots.</li>
+                </ul>
+            </div>
+
+            <div class="curso-box">
+                <h2><span class="numero">03</span> Para Adultos (21 años en adelante)</h2>
+                <ul>
+                    <li>IA para la vida y el trabajo: Uso de herramientas de IA para mejorar la productividad y el emprendimiento.</li>
+                    <li>Fundamentos de Machine Learning sin necesidad de saber programar.</li>
+                    <li>Automatización de tareas en negocios con herramientas de IA: (por ejemplo, ChatGPT, herramientas de automatización de oficinas).</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="talleres-charlas-titulo">Eventos, Talleres y Charlas Especiales</h2>
+        <div class="talleres-charlas">
+            <div class="taller-charla">
+                <h3>Taller: "IA para Emprendedores"</h3>
+                <p>Aprende cómo la IA puede impulsar tu negocio: desde la automatización de marketing hasta el análisis de datos.</p>
+            </div>
+            <div class="taller-charla">
+                <h3>Charla: "El Futuro de la IA"</h3>
+                <p>Exploraremos las últimas tendencias y el impacto potencial de la IA en nuestra sociedad.</p>
+            </div>
+            <div class="taller-charla">
+                <h3>Taller: "Introducción a Python para IA"</h3>
+                <p>Un taller práctico para principiantes que quieran aprender a programar en Python para aplicaciones de IA.</p>
+            </div>
+            <div class="taller-charla">
+                <h3>Charla: "Ética en la Inteligencia Artificial"</h3>
+                <p>Discutiremos los aspectos éticos y las consideraciones importantes al desarrollar y utilizar la IA.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 ColombiaCreaIA. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+</html>

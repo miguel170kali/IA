@@ -1,0 +1,418 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos - ColombiaCreaIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            box-sizing: border-box; /* Añadido para mejor manejo de padding y border */
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Imagen de fondo */
+        .imagen-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 1.25rem auto; /* Usar rem */
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1.5625rem; /* Usar rem */
+            border-radius: 0.75rem; /* Usar rem */
+            box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.15); /* Usar rem */
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(0.4375rem); /* Usar rem */
+            box-sizing: border-box; /* Añadido para mejor manejo de padding y border */
+        }
+
+        /* Header */
+        .header-principal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9375rem 5%; /* Usar rem */
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-sizing: border-box; /* Añadido para mejor manejo de padding y border */
+        }
+
+        .superior-izquierda {
+            display: flex;
+            align-items: center;
+        }
+
+        .superior-izquierda img {
+            height: 4.375rem; /* Usar rem */
+        }
+
+        .menu-navegacion {
+            display: flex;
+            gap: 2.5rem; /* Usar rem */
+            align-items: center;
+            height: 3.75rem; /* Usar unidades relativas */
+            position: absolute;
+            top: 0.625rem; /* Usar unidades relativas */
+            right: 100px
+        }
+
+        .menu-navegacion a,
+        .menu-navegacion .dropbtn {
+            font-size: 1.25rem; /* Usar rem */
+            font-weight: 600;
+            color: #33d4ff;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+            position: relative;
+        }
+
+        .menu-navegacion a::after,
+        .menu-navegacion .dropbtn::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0.125rem; /* Usar rem */
+            background-color: #fff;
+            bottom: -0.3125rem; /* Usar rem */
+            left: 0;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .menu-navegacion a:hover::after,
+        .menu-navegacion .dropbtn:hover::after {
+            width: 100%;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #0b1c3e;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); /* Usar rem */
+            z-index: 1;
+            border-radius: 0.5rem; /* Usar rem */
+            padding: 0.3125rem 0; /* Usar rem */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 0.75rem 1rem; /* Usar rem */
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1e3c6b;
+        }
+
+        /* Encabezado del contenido */
+        .header {
+            text-align: center;
+            padding-bottom: 1.5625rem; /* Usar rem */
+            border-bottom: 0.0625rem solid rgba(238, 238, 238, 0.5); /* Usar rem */
+            margin-bottom: 1.5625rem; /* Usar rem */
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00FFFF;
+            margin-bottom: 0.75rem; /* Usar rem */
+            font-size: 2.25rem; /* Usar rem */
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem; /* Usar rem */
+        }
+
+        /* Formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.125rem; /* Usar rem */
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem; /* Usar rem */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            padding: 0.75rem; /* Usar rem */
+            border: 0.0625rem solid rgba(221, 221, 221, 0.5); /* Usar rem */
+            border-radius: 0.375rem; /* Usar rem */
+            font-size: 1rem; /* Usar rem */
+            font-family: 'Poppins', sans-serif;
+            background-color: rgba(255, 255, 255, 0.75);
+            box-sizing: border-box; /* Añadido para mejor manejo de padding y border */
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 9.375rem; /* Usar rem */
+        }
+
+        button[type="submit"] {
+            background-color: rgba(0, 255, 255, 0.7);
+            color: #0b1c3e;
+            padding: 0.75rem 1.375rem; /* Usar rem */
+            border: none;
+            border-radius: 0.375rem; /* Usar rem */
+            cursor: pointer;
+            font-size: 1rem; /* Usar rem */
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #33d4ff;
+        }
+
+        /* Información de contacto */
+        .contacto-info {
+            margin-top: 2.1875rem; /* Usar rem */
+            padding-top: 1.5625rem; /* Usar rem */
+            border-top: 0.0625rem solid rgba(238, 238, 238, 0.5); /* Usar rem */
+            text-align: center;
+        }
+
+        .contacto-info h2 {
+            color: #333;
+            margin-bottom: 1.125rem; /* Usar rem */
+            font-size: 1.5rem; /* Usar rem */
+        }
+
+        .contacto-info p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem; /* Usar rem */
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 0.3125rem; /* Usar rem */
+            font-size: 0.875rem; /* Usar rem */
+        }
+
+        /* Media Queries para mejor adaptabilidad */
+        @media (max-width: 992px) {
+            .container {
+                width: 90%; /* Ancho más amplio en pantallas medianas */
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem; /* Ajustar tamaño del título */
+            }
+
+            .header p {
+                font-size: 0.9rem; /* Ajustar tamaño del párrafo */
+            }
+
+            .menu-navegacion {
+                gap: 2rem;
+            }
+
+            .menu-navegacion a,
+            .menu-navegacion .dropbtn {
+                font-size: 1.125rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            textarea,
+            button[type="submit"] {
+                font-size: 0.9rem;
+            }
+
+            .contacto-info h2 {
+                font-size: 1.3rem;
+            }
+
+            .contacto-info p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-principal {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .superior-izquierda {
+                margin-bottom: 0.5rem;
+            }
+
+            .menu-navegacion {
+                position: static;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                margin-top: 1rem;
+            }
+
+            .superior-izquierda img {
+                height: 3rem;
+            }
+
+            .container {
+                width: 95%; /* Ancho completo en pantallas pequeñas */
+                padding: 0.75rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            form {
+                gap: 0.8rem;
+            }
+
+            .contacto-info {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header-principal">
+        <div class="superior-izquierda">
+            <a href="/"><img src="{% static 'img/colombiacreaia.webp' %}" alt="Logo ColombiaCreaIA"></a>
+        </div>
+        <nav class="menu-navegacion">
+            <div class="dropdown">
+                <button class="dropbtn">INSTITUCIONAL</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'resena' %}">Reseña</a>
+                    <a href="{% url 'mision_vision_objetivos' %}">Misión, Visión y Objetivos</a>
+                </div>
+            </div>
+            <a href="{% url 'valores' %}">VALORES</a>
+            <div class="dropdown">
+                <button class="dropbtn">SERVICIOS</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'cursos_cortos_IA' %}">Cursos Cortos de IA</a>
+                    <a href="{% url 'consultorias_en_IA' %}">Consultorías en IA</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <img src="{% static 'img/contacto.webp' %}" alt="Fondo Contacto" class="imagen-fondo">
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Contáctanos</h1>
+            <p>¿Tienes alguna pregunta o deseas obtener más información sobre nuestros servicios? ¡No dudes en contactarnos!</p>
+        </div>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                <p style="color: red;">Por favor, corrige los errores en el formulario.</p>
+            {% endif %}
+
+            <label for="nombre">Nombre:</label>
+            {{ form.nombre }}
+            {% if form.nombre.errors %}
+                <div class="error-message">{{ form.nombre.errors.0 }}</div>
+            {% endif %}
+
+            <label for="email">Correo Electrónico:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors.0 }}</div>
+            {% endif %}
+
+            <label for="telefono">Teléfono (Opcional):</label>
+            {{ form.telefono }}
+            {% if form.telefono.errors %}
+                <div class="error-message">{{ form.telefono.errors.0 }}</div>
+            {% endif %}
+
+            <label for="mensaje">Mensaje:</label>
+            {{ form.mensaje }}
+            {% if form.mensaje.errors %}
+                <div class="error-message">{{ form.mensaje.errors.0 }}</div>
+            {% endif %}
+
+            <button type="submit">Enviar Mensaje</button>
+        </form>
+
+        <div class="contacto-info">
+            <h2>Información de Contacto</h2>
+            <p>
+                <b>Salomon Blanco</b><br>
+                <b>Email:</b> cicconsultorias20@gmail.com<br>
+                <b>Teléfono:</b> 322 5383826<br>
+                <b>Sitio Web:</b> www.cicconsultorias.com
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
